@@ -1,50 +1,48 @@
-#include <iostream>
-#include <vector>
-#include <unordered_map>
+#include <bits/stdc++.h>
 
 using namespace std;
+
+void solve() {
+    int n, m, k;
+    cin >> n >> m >> k;
+    
+    vector<int> a(n);
+    vector<int> b(m);
+    vector<int> cnt(k + 1, 0);
+    
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (a[i] <= k) {
+            cnt[a[i]] |= 1;
+        }
+    }
+    
+    for (int i = 0; i < m; i++) {
+        cin >> b[i];
+        if (b[i] <= k) {
+            cnt[b[i]] |= 2;
+        }
+    }
+    
+    vector<int> c(4, 0);
+    for (int e : cnt) {
+        c[e]++;
+    }
+    
+    if (c[1] > k / 2 || c[2] > k / 2 || c[1] + c[2] + c[3] != k) {
+        cout << "NO" << endl;
+    } else {
+        cout << "YES" << endl;
+    }
+}
 
 int main() {
     int t;
     cin >> t;
-
+    
     while (t--) {
-        int n, m, k;
-        cin >> n >> m >> k;
-
-        vector<int> a(n);
-        vector<int> b(m);
-
-        // Input elements of array a
-        for (int i = 0; i < n; i++)
-            cin >> a[i];
-
-        // Input elements of array b
-        for (int i = 0; i < m; i++)
-            cin >> b[i];
-
-        // Count occurrences of each integer in both arrays
-        unordered_map<int, int> freq;
-        for (int i = 0; i < n; i++)
-            freq[a[i]]++;
-        for (int i = 0; i < m; i++)
-            freq[b[i]]++;
-
-        // Check if there are enough occurrences of each integer from 1 to k
-        bool possible = true;
-        for (int i = 1; i <= k; i++) {
-            if (freq[i] < 2) {
-                possible = false;
-                break;
-            }
-        }
-
-        // Output the result
-        if (possible)
-            cout << "YES" << endl;
-        else
-            cout << "NO" << endl;
+        solve();
     }
-
+    
     return 0;
 }
